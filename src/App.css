@@ -14,7 +14,6 @@
   justify-content: center;
 }
 
-
 .count-left {
   margin-right: 10px;
   border: 2px solid #108a8a;
@@ -22,6 +21,7 @@
   display: flex;
   flex-direction: column;
   padding: 15px;
+  width: 250px;
 }
 
 .input-box {
@@ -37,7 +37,9 @@
   display: flex;
   justify-content: space-between;
   margin-bottom: 5px;
+
 }
+
 .input-div-start-value {
   display: flex;
   justify-content: space-between;
@@ -50,7 +52,6 @@
   border-radius: 10px;
   text-align: center;
   width: 100px;
-
 }
 
 .count-right {
@@ -59,10 +60,8 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-
+ width: 250px;
 }
-
-
 
 .span {
   color: #61dafb;
@@ -76,6 +75,9 @@
 }
 .input-error {
   background-color: red;
+}
+.max-span{
+  color: red
 }
 
 .button-box {

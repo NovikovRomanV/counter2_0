@@ -1,6 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import './App.css';
 import {Button} from "./Button";
+import {Input} from "./Input";
+
 
 function App() {
     const [value, setValue] = useState<number | string>(0)
@@ -8,12 +10,12 @@ function App() {
     const [startValueCounter, setStartValueCounter] = useState(0)
 
     useEffect(() => {
-        let valueLocalStorage = localStorage.getItem("valueKey")
+        let valueLocalStorage = localStorage.getItem("valueKeyStart")
         if (valueLocalStorage) {
             setStartValueCounter(JSON.parse(valueLocalStorage))
             setValue(JSON.parse(valueLocalStorage))
         }
-        let valueLocalStorageMaxValue = localStorage.getItem("valueK")
+        let valueLocalStorageMaxValue = localStorage.getItem("valueKeyMax")
         if (valueLocalStorageMaxValue) {
             setMaxValueCounter(JSON.parse(valueLocalStorageMaxValue))
         }
@@ -22,17 +24,17 @@ function App() {
         if (startValueCounter < 0) {
             setValue("incorrect value")
         }
-        if(startValueCounter >= 0){
+        if (startValueCounter >= 0) {
             setValue(0)
         }
-        if(maxValueCounter <= startValueCounter) {
+        if (maxValueCounter <= startValueCounter) {
             setValue("incorrect value")
         }
         if (startValueCounter >= 0) {
-            localStorage.setItem("valueKey", JSON.stringify(startValueCounter))
+            localStorage.setItem("valueKeyStart", JSON.stringify(startValueCounter))
         }
         if (maxValueCounter) {
-            localStorage.setItem("valueK", JSON.stringify(maxValueCounter))
+            localStorage.setItem("valueKeyMax", JSON.stringify(maxValueCounter))
         }
     }, [startValueCounter, maxValueCounter])
 
@@ -43,7 +45,6 @@ function App() {
     const countRest = () => {
         setValue(startValueCounter)
     }
-
 
     function startValue(e: React.ChangeEvent<HTMLInputElement>) {
         const startValue = e.currentTarget.value
@@ -65,8 +66,14 @@ function App() {
         setValue(startValueCounter)
     }
 
-    let classValueSpan = value === "incorrect value" ? "span-error" : ""
-    let classNameInputMaxValue = maxValueCounter === startValueCounter || maxValueCounter < 0 || maxValueCounter < startValueCounter ? "input-error" : ""
+    let classValueSpan
+    if (value === "incorrect value") {
+        classValueSpan = "span-error"
+    }
+    if (value === maxValueCounter) {
+        classValueSpan = "max-span"
+    }
+
     return (
         <div className="App">
             <div className={"counter-box"}>
@@ -74,15 +81,23 @@ function App() {
                     <div className={"input-box"}>
                         <div className={"input-div-max-value"}>
                             <div>Max value:</div>
-                            <input className={`input ${classNameInputMaxValue}`} type={"number"}
-                                   onChange={maxValue}
-                                   value={maxValueCounter}/>
+                            <Input
+                                type={"number"}
+                                onChange={maxValue}
+                                value={maxValueCounter}
+                                maxValueCounter={maxValueCounter}
+                                startValueCounter={startValueCounter}
+                            />
                         </div>
                         <div className={"input-div-start-value"}>
                             <div>Start value:</div>
-                            <input className={`input ${startValueCounter < 0 ? "input-error" : ""}`}
-                                   type={"number"}
-                                   onChange={startValue} value={startValueCounter}/>
+                            <Input
+                                type={"number"}
+                                onChange={startValue}
+                                value={startValueCounter}
+                                maxValueCounter={maxValueCounter}
+                                startValueCounter={startValueCounter}
+                            />
                         </div>
                     </div>
                     <div className={"button-box"}>
@@ -104,10 +119,7 @@ function App() {
     );
 }
 
-// "enter values and press 'set'"
+
 export default App;
 
-function setValue(arg0: number) {
-    throw new Error('Function not implemented.');
-}
 
