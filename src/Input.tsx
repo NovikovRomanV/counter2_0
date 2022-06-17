@@ -11,7 +11,9 @@ type InputPropsType = {
 
 export const Input = (props: InputPropsType) => {
     let classNameInputMaxValue = props.value === props.maxValueCounter ? props.maxValueCounter === props.startValueCounter || props.maxValueCounter < 0 || props.maxValueCounter < props.startValueCounter ? s.input_error : "" : ""
-    let classNameInputStartValue = props.value === props.startValueCounter ? props.startValueCounter < 0 ? s.input_error : "" : ""
+    let classNameInputStartValue = props.value === props.startValueCounter ?props.maxValueCounter === props.startValueCounter || props.maxValueCounter < 0 || props.maxValueCounter < props.startValueCounter ? s.input_error : "" : ""
+
+    // let classNameInputStartValue = props.value === props.startValueCounter ? props.startValueCounter < 0 ? s.input_error : "" : ""
 
     return (
         <input
